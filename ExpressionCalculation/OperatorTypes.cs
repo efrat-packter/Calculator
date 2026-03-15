@@ -9,8 +9,8 @@ namespace ExpressionCalculation
     public enum OperatorTypes
     {
         Add,
-        Subtract,
-        Multiply,
-        Divide
+        Sub,
+        Mul,
+        Div
     }
 }

@@ -9,6 +9,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\ExpressionCalculation\ExpressionCalculation.csproj" />
+    <ProjectReference Include="..\Parser\Parser.csproj" />
   </ItemGroup>
 
 </Project>

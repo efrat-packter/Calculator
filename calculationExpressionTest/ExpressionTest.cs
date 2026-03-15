@@ -13,34 +13,34 @@ namespace calculationExpressionTest
             Number right = new Number(2);
             Expression expr = new Expression(OperatorTypes.Add, left, right);
 
-            Assert.AreEqual(4, expr.ValueCalc());
+            Assert.AreEqual(4, expr.CalcValue());
         }
         [TestMethod]
         public void Subtract_CorrectResult()
         {
             Number left = new Number(2);
             Number right = new Number(2);
-            Expression expr = new Expression(OperatorTypes.Subtract, left, right);
+            Expression expr = new Expression(OperatorTypes.Sub, left, right);
 
-            Assert.AreEqual(0, expr.ValueCalc());
+            Assert.AreEqual(0, expr.CalcValue());
         }
         [TestMethod]
         public void Multiply_CorrectResult()
         {
             Number left = new Number(2);
             Number right = new Number(2);
-            Expression expr = new Expression(OperatorTypes.Multiply, left, right);
+            Expression expr = new Expression(OperatorTypes.Mul, left, right);
 
-            Assert.AreEqual(4, expr.ValueCalc());
+            Assert.AreEqual(4, expr.CalcValue());
         }
         [TestMethod]
         public void Divide_CorrectResult()
         {
             Number left = new Number(2);
             Number right = new Number(2);
-            Expression expr = new Expression(OperatorTypes.Divide, left, right);
+            Expression expr = new Expression(OperatorTypes.Div, left, right);
 
-            Assert.AreEqual(1, expr.ValueCalc());
+            Assert.AreEqual(1, expr.CalcValue());
         }
         [TestMethod]
         public void CalcExpression_correctResult()
@@ -49,7 +49,7 @@ namespace calculationExpressionTest
             Number right = new Number(2);
             Expression expression1 = new Expression(OperatorTypes.Add, left, right);
             Expression expression2 = new Expression(OperatorTypes.Add, left, expression1);
-            Assert.AreEqual(6, expression2.ValueCalc());
+            Assert.AreEqual(6, expression2.CalcValue());
         }
     }
 }

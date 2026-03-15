@@ -20,15 +20,15 @@ namespace ExpressionCalculation
             operators = new Dictionary<OperatorTypes, Func<double, double, double>>
            {
                {OperatorTypes.Add,(x,y)=> (x+y) },
-               {OperatorTypes.Subtract,(x,y)=> (x-y) },
-               {OperatorTypes.Multiply,(x,y)=> (x*y) },
-               {OperatorTypes.Divide,(x,y)=> (x/y) }
+               {OperatorTypes.Sub,(x,y)=> (x-y) },
+               {OperatorTypes.Mul,(x,y)=> (x*y) },
+               {OperatorTypes.Div,(x,y)=> (x/y) }
            };
         }
-        public double ValueCalc()
+        public double CalcValue()
         {
-            double left = Left.ValueCalc();
-            double right = Right.ValueCalc();
+            double left = Left.CalcValue();
+            double right = Right.CalcValue();
             return operators[Operator](left, right);
         }
     }

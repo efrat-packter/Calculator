@@ -8,6 +8,6 @@ namespace ExpressionCalculation
 {
     public interface IMathElement
     {
-        double ValueCalc();
+        double CalcValue();
     }
 }

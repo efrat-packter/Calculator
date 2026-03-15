@@ -13,7 +13,7 @@ namespace ExpressionCalculation
         {
             this.Value = value;
         }
-        public double ValueCalc()
+        public double CalcValue()
         {
             return Value;
         }
