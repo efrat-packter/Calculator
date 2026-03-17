@@ -1,75 +1,149 @@
 ﻿using ExpressionCalculation;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Text.RegularExpressions;
+using Expression = ExpressionCalculation.BinaryExpression;
 
 namespace Parser
 {
     public class Parse
     {
+        private readonly ExpressionFactory _factory;
+        private readonly Validation _validation;
+        Dictionary<string, OperatorTypes> opp = new()
+        {
+            ["+"] = OperatorTypes.Add,
+            ["-"] = OperatorTypes.Sub,
+            ["/"] = OperatorTypes.Div,
+            ["*"] = OperatorTypes.Mul
+        };
+        public delegate IExpression ParseOperator(string[] arr, ref int index);
+        Dictionary<string, ParseOperator> operatorParser;
+        Dictionary<string, string> operatorTypes;
 
-        public IMathElement ParseExpression(string expressionString)
+        public Parse(ExpressionFactory factory, Validation validation)
         {
-            expressionString = expressionString.Replace("(", " ( ").Replace(")", " ) ");
-            string[] splitStr = expressionString.Split(' ', StringSplitOptions.RemoveEmptyEntries);
-            int x = 0;
-            IMathElement ex = Help(splitStr, ref x);
-            return ex;
-        }
-        public IMathElement Help(string[] arr, ref int index)//( add ( mul 2*3 3 ) 3 )
-        {
-            if (arr[index] == "(")
+            _factory = factory;
+            _validation = validation;
+            operatorTypes = new()
             {
-                index++;
-                OperatorTypes op = Enum.Parse<OperatorTypes>(arr[index], true);
-
-                index++;
-                IMathElement left = Help(arr, ref index);
-                IMathElement right = Help(arr, ref index);
-                Expression expression = new Expression(op, left, right);
-                index++;
-                return expression;
-            }
-            else
-                /*                return new Number(Convert.ToDouble(arr[index++]));
-                */
-                return Help2(arr, ref index);
-        }
-        Stack<IMathElement> stack = new Stack<IMathElement>();
-        public Number Help2(string[] arr, ref int index)//2 *3-86/6
-        {
-            if (double.TryParse(arr[index++], out double value))
-                return new Number(value);
-            else
+                ["+"] = "binary",
+                ["-"] = "binary",
+                ["*"] = "binary",
+                ["/"] = "binary",
+            };
+            operatorParser = new Dictionary<string, ParseOperator>()
             {
-                string expressionString = arr[index].Replace("*", " * ")
-                    .Replace("/", " / ").Replace("-", " - ").Replace("+", " + ");
-                string[] splitStr = expressionString.Split(' ', StringSplitOptions.RemoveEmptyEntries);
-                for (int i = 0; i < splitStr.Length; i++)
+                ["binary"] = (string[] arr, ref int index) =>
                 {
-                    if (splitStr[i] == "*" || splitStr[i] == "/")
+                    OperatorTypes tempOp = opp[arr[index]];
+                    index++;
+                    IExpression left = ParsePrefixExpression(arr, ref index);
+                    IExpression right = ParsePrefixExpression(arr, ref index);
+                    return _factory.CreateBinary(tempOp, left, right);
+                }
+            };
+            _validation = validation;
+        }
+
+        public int GetPriority(char op)
+        {
+            if (op == '-' || op == '+')
+                return 1;
+            else if (op == '*' || op == '/')
+                return 2;
+            return 0;
+        }
+
+        public string[] ReverseString(string[] str, int start, int end)
+        {
+            string temp;
+            while (start < end)
+            {
+                temp = str[start];
+                str[start] = str[end];
+                str[end] = temp;
+                start++;
+                end--;
+            }
+            return str;
+        }
+
+        public string InfixToPostfix(string[] tokens)
+        {
+            Stack<string> operatorStack = new Stack<string>();
+            List<string> output = new List<string>();
+
+            foreach (string token in tokens)
+            {
+                if (double.TryParse(token, out _))
+                {
+                    output.Add(token);
+                }
+                else if (token == "(")
+                {
+                    operatorStack.Push(token);
+                }
+                else if (token == ")")
+                {
+                    while (operatorStack.Peek() != "(")
                     {
-                        IMathElement prev = stack.Pop();
-                  
-
-                        IMathElement left1 = prev.right;
-                        OperatorTypes op1 = Enum.Parse<OperatorTypes>(splitStr[i++], true);
-                        IMathElement right1 = new Number(int.Parse(splitStr[i]));
-
-                        IMathElement ex1 = new Expression(op1, left1, right1);
-                        prev.right(ex1);
-                        stack.Push(prev);
+                        output.Add(operatorStack.Pop());
                     }
-                    Number left = new Number(int.Parse(splitStr[i++]));
-                    OperatorTypes op = Enum.Parse<OperatorTypes>(splitStr[i++], true);
-                    Number right = new Number(int.Parse(splitStr[i]));
+                    operatorStack.Pop();
+                }
+                else
+                {
+                    while (operatorStack.Count > 0 &&
+                           _validation.IsOperator(operatorStack.Peek()[0]) &&
+                           GetPriority(token[0]) < GetPriority(operatorStack.Peek()[0]))
+                    {
+                        output.Add(operatorStack.Pop());
+                    }
 
-                    IMathElement ex = new Expression(op, left, right);
-                    stack.Push(ex);
+                    operatorStack.Push(token);
                 }
             }
 
+            while (operatorStack.Count > 0)
+            {
+                output.Add(operatorStack.Pop());
+            }
+
+            return string.Join(" ", output);
+        }
+
+        public IExpression InfixToPrefix(string[] tokens)
+        {
+            Array.Reverse(tokens);
+
+            for (int i = 0; i < tokens.Length; i++)
+            {
+                if (tokens[i] == "(")
+                    tokens[i] = ")";
+                else if (tokens[i] == ")")
+                    tokens[i] = "(";
+            }
+
+            string postfix = InfixToPostfix(tokens);
+
+            string[] resultTokens = postfix.Split(' ');
+            Array.Reverse(resultTokens);
+            return PrefixToExpression(resultTokens);
+        }
+
+        public IExpression PrefixToExpression(string[] tokens)
+        {
+            int x = 0;
+            return ParsePrefixExpression(tokens, ref x);
+        }
+        public IExpression ParsePrefixExpression(string[] arr, ref int index)
+        {
+            if (_validation.IsOperator(arr[index][0]))
+            {
+                IExpression expression = operatorParser[operatorTypes[arr[index]]](arr, ref index);
+                return expression;
+            }
+            else
+                return _factory.CreateNumber(Convert.ToDouble(arr[index++]));
         }
     }
+}

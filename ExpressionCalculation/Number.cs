@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ExpressionCalculation
 {
-    public class Number : IMathElement
+    public class Number : IExpression
     {
         public double Value { get; private set; }
         public Number(double value)
