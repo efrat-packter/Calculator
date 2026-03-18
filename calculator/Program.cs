@@ -1,4 +1,6 @@
 using calculator;
-
 var bootstrapper = new Bootstrapper();
-bootstrapper.Run();
+
+CalculatorApp calculatorApp = bootstrapper.Intilize();
+
+calculatorApp.Run();
