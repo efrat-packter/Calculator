@@ -22,7 +22,7 @@ namespace ExpressionCalculation
                {OperatorTypes.Add,(x,y)=> (x+y) },
                {OperatorTypes.Sub,(x,y)=> (x-y) },
                {OperatorTypes.Mul,(x,y)=> (x*y) },
-               {OperatorTypes.Div,(x,y)=> (x/y) }
+               {OperatorTypes.Div,(x,y)=> y==0 ?throw new DivideByZeroException("cannot divide by zero"):(x/y) }
            };
         }
         public double CalcValue()

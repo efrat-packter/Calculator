@@ -35,7 +35,14 @@ namespace calculator
             string[] str = _tokenizer.SplitForToken(inputExpression);
 
             IExpression expression = _parse.InfixToPrefix(str);
+            try
+            {
             Console.WriteLine(expression.CalcValue());
+                     }
+            catch (DivideByZeroException ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
         }
     }
 }
