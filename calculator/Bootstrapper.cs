@@ -6,8 +6,10 @@ namespace calculator
     public class Bootstrapper
     {
 
+        // CR: Typo in Initialize
         public CalculatorApp Intilize()
         {
+            // CR: Conventions: use var
             ExpressionFactory factory = new ExpressionFactory();
             Tokenizer tokenizer = new Tokenizer();
             Validation validation = new Validation(tokenizer);

@@ -5,17 +5,24 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+// CR: Always format your code
+
 namespace Parser
 {
     public class Validation
     {
         private readonly Tokenizer _tokenizer;
+        
+        // Suggestion: you can use primary constructor if you like
         public Validation(Tokenizer tokenizer)
         {
             _tokenizer = tokenizer;
         }
+        // CR: Clean Code: methods used only in this class should be private
         public bool IsDigit(char c)
         {
+            // CR: Clean Code: magic strings
+            // CR: Clean Code: the if statement has a boolean expression, you can return it
             if (c >= '0' && c <= '9')
             {
                 return true;
@@ -23,6 +30,7 @@ namespace Parser
             return false;
         }
 
+        // CR: Clean Code: methods used only in this class should be private
         public bool IsOperator(char c)
         {
             return c == '+' || c == '-' || c == '*' || c == '/';
@@ -31,6 +39,7 @@ namespace Parser
         public bool IsValidInput(string str)
         {
 
+            // CR: SOLID - OCP: too hard coded logic, this will for sure break in the future
             bool status = true;
             int countParenthesis = 0;
             string[] tokens = _tokenizer.SplitForToken(str);
@@ -58,6 +67,7 @@ namespace Parser
                     {
                         return false;
                     }
+                    //CR: unnecessary else
                     else
                     {
                         if (countParenthesis > 0)

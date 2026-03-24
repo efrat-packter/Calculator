@@ -25,6 +25,7 @@ namespace calculator
             string inputExpression = "";
             while (true)
             {
+                // CR: Typo
                 _writer.Write("enter a expressoin");
                 inputExpression = _reader.Read();
                 if (string.IsNullOrWhiteSpace(inputExpression) || !_validation.IsValidInput(inputExpression))
@@ -36,6 +37,7 @@ namespace calculator
             }
 
 
+            // CR: Naming
             string[] str = _tokenizer.SplitForToken(inputExpression);
 
             IExpression expression = _parse.InfixToPrefix(str);
@@ -45,6 +47,7 @@ namespace calculator
             }
             catch (DivideByZeroException ex)
             {
+                // CR: Clean Code: Redundant ToString()
                 _writer.Write(ex.Message.ToString());
             }
         }

@@ -6,8 +6,12 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
+// CR: Formatting: always format files
+
 namespace ExpressionCalculation
 {
+    // CR: SOLID - OCP: what happens if you have more types of expressions? this class will be very large,
+    // and you will need to modify it every time.
     public class ExpressionFactory
     {
 

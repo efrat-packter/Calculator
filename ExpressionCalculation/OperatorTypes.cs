@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace ExpressionCalculation
 {
+    // CR: SOLID - OCP: what is in the future you will need to add a lot more operators?
     public enum OperatorTypes
     {
         Add,
