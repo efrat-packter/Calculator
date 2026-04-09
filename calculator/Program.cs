@@ -1,8 +1,19 @@
-using calculator;
-var bootstrapper = new Bootstrapper();
+using Calculator;
+using Microsoft.Extensions.Configuration;
+
+
+var configuration = new ConfigurationBuilder()
+    .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
+    .Build();
+
+
+
+
+
+var bootstrapper = new Bootstrapper(configuration);
 
 // CR: Conventions: use var (everywhere)
-CalculatorApp calculatorApp = bootstrapper.Intilize();
+var calculatorApp = bootstrapper.Initialize();
 
 calculatorApp.Run();
 

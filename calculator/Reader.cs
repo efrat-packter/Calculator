@@ -1,19 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿namespace Calculator;
 
-// CR: Formatting
-
-namespace calculator
+public class Reader : IReader
 {
-    public class Reader : IReader
+    public string Read()
     {
-
-        public string Read()
-        {
-          return  Console.ReadLine(); 
-        }
+        return Console.ReadLine(); 
     }
 }
