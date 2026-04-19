@@ -3,5 +3,6 @@
 namespace Parser;
 public interface IOperatorParser
 {
-    IExpression Parse(string[] arr, ref int index);
+    public delegate IExpression ParseDelegate(string[] arr, ref int index);
+    IExpression Parse(string[] arr, ref int index, ParseDelegate parseNext);
 }

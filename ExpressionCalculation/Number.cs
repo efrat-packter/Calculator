@@ -9,7 +9,7 @@ public class Number : IExpression
     {
         _value = value;
     }
-    public double CalculatValue()
+    public double CalculateValue()
     {
         return _value;
     }

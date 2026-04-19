@@ -2,7 +2,7 @@
 
 namespace Parser;
 
-public class MathTokenizer:ITokenizer
+public class MathTokenizer : ITokenizer
 {
     private readonly string _regex;
 
@@ -12,8 +12,6 @@ public class MathTokenizer:ITokenizer
     }
     public string[] Tokenize(string str)
     {
- 
         return Regex.Matches(str, _regex).Select(x => x.Value).ToArray();
-     
     }
 }

@@ -1,6 +1,4 @@
-﻿
-
-namespace Parser;
+﻿namespace Parser;
 
 public interface ITokenFactory
 {

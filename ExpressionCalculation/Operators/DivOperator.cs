@@ -9,6 +9,8 @@ public class DivOperator : IBinaryOperator
 
     public string Symbol => "/";
 
+    public bool IsRight => false;
+
     public double Execute(double left, double right)
     {
         return right == 0 ? throw new DivideByZeroException("cannot divide by zero") :left / right;

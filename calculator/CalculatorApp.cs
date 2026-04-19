@@ -40,9 +40,9 @@ public class CalculatorApp
         IExpression expression = _parse.ConvertInfixTokensToPrefixExpression(tokens);
         try
         {
-            _writer.Write(expression.CalculatValue().ToString());
+            _writer.Write(expression.CalculateValue().ToString());
         }
-        catch (DivideByZeroException ex)
+        catch (Exception ex)
         {
             _writer.Write(ex.Message);
         }

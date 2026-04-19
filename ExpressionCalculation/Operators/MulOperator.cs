@@ -5,6 +5,7 @@ public class MulOperator : IBinaryOperator
 {
     public int Priority => 2;
     public string OperatorType => "Binary";
+    public bool IsRight => false;
 
     public string Symbol => "*";
 

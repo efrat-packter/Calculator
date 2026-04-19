@@ -1,5 +1,4 @@
-﻿
-namespace ExpressionCalculation.Operators;
+﻿namespace ExpressionCalculation.Operators;
 
 public class AddOperator : IBinaryOperator
 {
@@ -8,6 +7,7 @@ public class AddOperator : IBinaryOperator
     public string OperatorType => "Binary";
 
     public string Symbol => "+";
+    public bool IsRight => false;
 
     public double Execute(double left, double right)
     {

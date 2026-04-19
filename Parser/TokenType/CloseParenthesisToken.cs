@@ -2,22 +2,22 @@
 
 public class CloseParenthesisToken : IToken
 {
-    public ValidationResult Validation(bool status, int countParenthesis)
+    public static readonly CloseParenthesisToken Instance = new CloseParenthesisToken();
+
+    public List<IToken> GetNextTokens()
     {
-        if (status)
+        return new List<IToken> 
         {
-            return new ValidationResult { IsValid = false };
-        }
-
-        if (countParenthesis<=0)
-         
-            return new ValidationResult { IsValid = false };
-
-        return new ValidationResult
-        {
-            IsValid = true,
-            Status = false,
-            CountParenthesis = countParenthesis-1
+            CloseParenthesisToken.Instance,
+            RightUnaryToken.Instance,
+            BinaryOperatorToken.Instance
         };
+    }
+    public ValidationResult Validate(IToken prev, int countParenthesis)
+    {
+        if (countParenthesis <= 0 || prev == null || !prev.GetNextTokens().Contains(Instance))
+            return new ValidationResult { IsValid = false };
+
+        return new ValidationResult { IsValid = true, CountParenthesis = countParenthesis - 1 };
     }
 }

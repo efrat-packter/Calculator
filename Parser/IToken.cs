@@ -2,5 +2,6 @@
 
 public interface IToken
 {
-    ValidationResult Validation(bool status, int countParenthesis);
+    public ValidationResult Validate(IToken prev, int countParenthesis);
+    List<IToken> GetNextTokens();
 }

@@ -1,4 +1,5 @@
 ﻿using ExpressionCalculation;
+using Parser.TokenType;
 
 namespace Parser;
 
@@ -10,19 +11,17 @@ public class Validation
     private const char MaxDigit = '9';
     private readonly ITokenFactory _factory;
 
-    public Validation(ITokenizer tokenizer,ITokenFactory factory,OperatorFactory operatorFactory)
+    public Validation(ITokenizer tokenizer, ITokenFactory factory, OperatorFactory operatorFactory)
     {
         _tokenizer = tokenizer;
         _factory = factory;
         _operatorFactory = operatorFactory;
-    } 
+    }
 
     private bool IsDigit(char c)
     {
         return c >= MinDigit && c <= MaxDigit;
     }
-
-    // CR: Clean Code: methods used only in this class should be private
     public bool IsOperator(char c)
     {
         return _operatorFactory.IsOperatorExist(c.ToString());
@@ -30,19 +29,25 @@ public class Validation
 
     public bool IsValidInput(string str)
     {
-        bool status = true;
-        int countParenthesis = 0;
+
+        int parenthesisCount = 0;
+        IToken? prev = null;
         var tokens = _tokenizer.Tokenize(str);
-        foreach (var stringToken in tokens)
+        foreach (var tokenStr in tokens)
         {
-            IToken token = _factory.CreateToken(stringToken);
-            var result = token.Validation(status, countParenthesis);
+            IToken token = _factory.CreateToken(tokenStr);
+            var result = token.Validate(prev!, parenthesisCount);
+
             if (!result.IsValid)
                 return false;
 
-            status = result.Status;
-            countParenthesis = result.CountParenthesis;
+            prev = token;
+            parenthesisCount = result.CountParenthesis;
         }
-        return countParenthesis == 0 && !status;
+
+        bool isBalanced = (parenthesisCount == 0);
+        bool validEnd = (prev is NumberToken || prev is CloseParenthesisToken || prev is RightUnaryToken);
+
+        return isBalanced && validEnd;
     }
 }

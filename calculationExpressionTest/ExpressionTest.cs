@@ -17,7 +17,7 @@ public class ExpressionTest
         var right = new Number(2);
         var expr = new BinaryExpression(_add, left, right);
 
-        Assert.AreEqual(4, expr.CalculatValue());
+        Assert.AreEqual(4, expr.CalculateValue());
     }
     [TestMethod]
     public void Subtract_CorrectResult()
@@ -26,7 +26,7 @@ public class ExpressionTest
         var right = new Number(2);
         var expr = new BinaryExpression(_sub, left, right);
 
-        Assert.AreEqual(0, expr.CalculatValue());
+        Assert.AreEqual(0, expr.CalculateValue());
     }
     [TestMethod]
     public void Multiply_CorrectResult()
@@ -35,7 +35,7 @@ public class ExpressionTest
         var right = new Number(2);
         var expr = new BinaryExpression(_mul, left, right);
 
-        Assert.AreEqual(4, expr.CalculatValue());
+        Assert.AreEqual(4, expr.CalculateValue());
     }
     [TestMethod]
     public void Divide_CorrectResult()
@@ -44,7 +44,7 @@ public class ExpressionTest
         var right = new Number(2);
         var expr = new BinaryExpression(_div, left, right);
 
-        Assert.AreEqual(1, expr.CalculatValue());
+        Assert.AreEqual(1, expr.CalculateValue());
     }
     [TestMethod]
     public void CalcExpression_correctResult()
@@ -53,6 +53,6 @@ public class ExpressionTest
         var right = new Number(2);
         var expression1 = new BinaryExpression(_add, left, right);
         var expression2 = new BinaryExpression(_add, left, expression1);
-        Assert.AreEqual(6, expression2.CalculatValue());
+        Assert.AreEqual(6, expression2.CalculateValue());
     }
 }

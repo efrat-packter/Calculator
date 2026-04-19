@@ -2,8 +2,6 @@
 
 public class ExpressionFactory
 {
-
-
     private readonly Dictionary<string, IExpressionCreator> _creators;
 
     public ExpressionFactory(IEnumerable<IExpressionCreator> creators)

@@ -1,27 +1,21 @@
 ﻿using ExpressionCalculation;
-
 namespace Parser;
 
 public class BinaryOperatorParser : IOperatorParser
 {
     private readonly OperatorFactory _operatorFactory;
     private readonly ExpressionFactory _expressionFactory;
-    private readonly Parse _parse;
-
-
-    public BinaryOperatorParser(OperatorFactory operatorFactory, ExpressionFactory expressionFactory, Parse parse)
-    { 
+    public BinaryOperatorParser(OperatorFactory operatorFactory, ExpressionFactory expressionFactory)
+    {
         _operatorFactory = operatorFactory;
         _expressionFactory = expressionFactory;
-        _parse = parse;
-       }
-    public IExpression Parse(string[] arr, ref int index)
+    }
+    public IExpression Parse(string[] arr, ref int index, IOperatorParser.ParseDelegate parseNext)
     {
-
-        IBinaryOperator op =(IBinaryOperator) _operatorFactory.GetOperator(arr[index]);
+        IBinaryOperator op = (IBinaryOperator)_operatorFactory.GetOperator(arr[index]);
         index++;
-        IExpression left = _parse.ParsePrefixExpression(arr, ref index);
-        IExpression right =_parse.ParsePrefixExpression(arr, ref index);
-        return _expressionFactory.Create("Binary",op, left, right);
+        IExpression left = parseNext(arr, ref index);
+        IExpression right = parseNext(arr, ref index);
+        return _expressionFactory.Create("Binary", op, left, right);
     }
 }

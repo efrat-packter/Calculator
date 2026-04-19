@@ -1,19 +1,22 @@
-﻿namespace Parser.TokenType;
+﻿
+namespace Parser.TokenType;
 
 public class NumberToken : IToken
 {
-    public ValidationResult Validation(bool status,int countParenthesis)
+    public static readonly NumberToken Instance = new NumberToken();
+
+    public List<IToken> GetNextTokens()
     {
-        if (!status)
-        {
-            return new ValidationResult { IsValid = false };
-        }
-        status = false;
-        return new ValidationResult
-        {
-            IsValid = true,
-            Status = false,
-            CountParenthesis = countParenthesis
+        return new List<IToken>
+        { RightUnaryToken.Instance,
+            BinaryOperatorToken.Instance,
+            CloseParenthesisToken.Instance
         };
+    }
+
+    public ValidationResult Validate(IToken prev, int countParenthesis)
+    {
+        bool valid = (prev == null) || prev.GetNextTokens().Contains(Instance);
+        return new ValidationResult { IsValid = valid, CountParenthesis = countParenthesis };
     }
 }

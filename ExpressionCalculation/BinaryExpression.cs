@@ -38,21 +38,10 @@ namespace ExpressionCalculation
             _left = left;
             _right = right;
         }
-        // CR: SOLID - OCP: you are coupled to double. what if we want to have different types?
-        //  you have an abstraction, IExpression, but you still use double
-        // CR: SOLID - OCP: you are coupled to double. what if we want to have different types?
-        //  you have an abstraction, IExpression, but you still use double
-        //funcForOperator = new Dictionary<OperatorTypes, Func<double, double, double>>
-        //   {
-        //       {OperatorTypes.Add,(x, y)=> (x+y) },
-        //       {OperatorTypes.Sub,(x, y)=> (x-y) },
-        //       { OperatorTypes.Mul,(x, y) => (x * y) },
-        //       { OperatorTypes.Div,(x, y) => y == 0 ? throw new DivideByZeroException("cannot divide by zero") : (x / y) }
-        //   };
-public double CalculatValue()
+        public double CalculateValue()
         {
-            var left = _left.CalculatValue();
-            var right = _right.CalculatValue();
+            var left = _left.CalculateValue();
+            var right = _right.CalculateValue();
             return _operator.Execute(left, right);
         }
     }
