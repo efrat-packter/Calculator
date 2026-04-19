@@ -1,21 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿
+namespace ExpressionCalculation;
 
-namespace ExpressionCalculation
+public class Number : IExpression
 {
-    public class Number : IExpression
+
+    private  double _value ;
+    public Number(double value)
     {
-        public double Value { get; private set; }
-        public Number(double value)
-        {
-            this.Value = value;
-        }
-        public double CalcValue()
-        {
-            return Value;
-        }
+        _value = value;
+    }
+    public double CalculateValue()
+    {
+        return _value;
     }
 }

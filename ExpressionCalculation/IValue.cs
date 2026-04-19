@@ -6,11 +6,8 @@ using System.Threading.Tasks;
 
 namespace ExpressionCalculation
 {
-    public enum OperatorTypes
+    public interface IValue
     {
-        Add,
-        Sub,
-        Mul,
-        Div
+        
     }
 }

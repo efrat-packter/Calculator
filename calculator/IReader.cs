@@ -1,14 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿namespace Calculator;
 
-namespace calculator
+public interface IReader
 {
-   
-    public interface IReader
-    {
-         string Read();
-    }
+    string Read();
 }

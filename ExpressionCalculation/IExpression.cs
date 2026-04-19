@@ -1,13 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿
+namespace ExpressionCalculation;
 
-namespace ExpressionCalculation
+public interface IExpression
 {
-    public interface IExpression
-    {
-        double CalcValue();
-    }
+    double CalculateValue();
 }

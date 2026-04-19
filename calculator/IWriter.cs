@@ -1,13 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿namespace Calculator;
 
-namespace calculator
+public interface IWriter
 {
-    public interface IWriter
-    {
-        void Write(string output);
-    }
+    void Write(string output);
 }
